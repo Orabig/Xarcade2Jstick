@@ -78,6 +78,9 @@ int16_t uinput_kbd_write(UINP_KBD_DEV* const kbd, unsigned int keycode,
 
 	if (write(kbd->fd, &event, sizeof(event)) < 0) {
 		printf("[SNESDev-Rpi] Simulate key error\n");
+	} else {
+		// DEBUG
+		printf("[DEBUG] uinput_kbd_write :: type=%d code=%d value=%d\n",evtype,keycode,keyvalue);
 	}
 
 	event.type = EV_SYN;

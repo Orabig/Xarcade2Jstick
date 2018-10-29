@@ -44,7 +44,16 @@ int16_t input_xarcade_read(INP_XARC_DEV* const xdev) {
 	rd = read(xdev->fevdev, xdev->ev, sizeof(struct input_event) * 64);
 	if (rd < 0)
 		return -errno;
-	return (rd / sizeof(struct input_event));
+	int event_count = rd / sizeof(struct input_event);
+	// DEBUG
+	// printf("[DEBUG] input_xarcade_read :: %d events :\n",event_count);
+	// int i;
+	// for (i=0;i<event_count;i++) {
+	//   printf("[DEBUG]      [%d] : type=%d code=%d value=%d\n",i,
+	//      xdev->ev[i].type, xdev->ev[i].code, xdev->ev[i].value);		
+	// }
+ 
+	return event_count;
 }
 
 int16_t input_xarcade_close(INP_XARC_DEV* const xdev) {

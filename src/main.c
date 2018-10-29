@@ -52,10 +52,14 @@ static void teardown();
 static void signal_handler(int signum);
 
 void outputKeyPress(short keyPad, int keyCode, int state) {
+	 // DEBUG
+	 printf("DEBUG : ouputKeyPress[%d] : %d=%d\n",keyPad,keyCode,state);
 	 uinput_gpad_write(&uinp_gpads[ keyPad ], keyCode, state, EV_KEY);
 }
 
 void outputAxisChange(short keyPad, int axisCode, int value) {
+	 // DEBUG
+	 printf("DEBUG : outputAxisChange[%d] : %d=%d\n",keyPad,axisCode,value);
 	 uinput_gpad_write(&uinp_gpads[ keyPad ], axisCode, value, EV_ABS);
 }
 
@@ -129,6 +133,9 @@ int main(int argc, char* argv[]) {
 			if (EV_KEY == xarcdev.ev[ctr].type) {
 
 				keyStates[xarcdev.ev[ctr].code] = xarcdev.ev[ctr].value;
+				
+				// DEBUG
+				// printf("DEBUG : keyStates[ %d ] = %d\n",xarcdev.ev[ctr].code,xarcdev.ev[ctr].value);
 
 				int value = xarcdev.ev[ctr].value;
 				int isPressed = value > 0;

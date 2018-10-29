@@ -37,12 +37,14 @@ static void send_key_event(int fd, unsigned int keycode, int keyvalue,
 
 	if (write(fd, &event, sizeof(event)) < 0) {
 		printf("[uinput_gamepad] Simulate key error\n");
+	} else {
+		// DEBUG
+		printf("[DEBUG] send_key_event :: type=%d code=%d value=%d\n",evtype,keycode,keyvalue);
 	}
 
 	event.type = EV_SYN;
 	event.code = SYN_REPORT;
 	event.value = 0;
-	write(fd, &event, sizeof(event));
 	if (write(fd, &event, sizeof(event)) < 0) {
 		printf("[uinput_gamepad] Simulate key error\n");
 	}
@@ -126,6 +128,7 @@ int16_t uinput_gpad_write(UINP_GPAD_DEV* const gpad, uint16_t keycode,
 	event.type = EV_SYN;
 	event.code = SYN_REPORT;
 	event.value = 0;
+	write(gpad->fd, &event, sizeof(event));
 	if (write(gpad->fd, &event, sizeof(event)) < 0) {
 		printf("[uinput_gamepad] Simulate key error\n");
 	}
